@@ -4,7 +4,8 @@ import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import { Estudiante } from '../../Containers/estudiante';
 import { Curso } from '../../Containers/curso';
 import { Pais } from '../../Containers/pais';
-import { Asignatura } from '../../Containers/Asignatura';
+import { Asignatura } from '../../Containers/asignatura';
+import { Docente } from '../../Containers/docente';
 
 import './container.css'
 
@@ -47,6 +48,12 @@ import './container.css'
                         url:'/asignaturas',
                         icon:'Dictionary',
                         key:'asignaturasNav',
+                    },
+                    {
+                            name:'Docentes',
+                            url:'/docentes',
+                            icon:'ManagerSelfService',
+                            key:'docentesNav',
                     }]
                     }]}
             />
@@ -56,6 +63,7 @@ import './container.css'
                     <Route exact path="/cursos" component={Curso} />
                     <Route exact path="/paises" component={Pais} />
                     <Route exact path="/asignaturas" component={Asignatura} />
+                    <Route exact path="/docentes" component={Docente} />
                 </Switch>
             </Router>
             </div>
