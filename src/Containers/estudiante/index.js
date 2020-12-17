@@ -24,7 +24,7 @@ export const Estudiante = () => {
             return;
         }
 
-        setEstudiantes(response.map(item => ({ ...item, nombreCurso: item.curso.nombre })));
+        setEstudiantes(response.map(item => ({ ...item, nombreCurso: item.curso.nombre,nombrePais: item.pais.nombre })));
     }
 
     const handleRefreshClick = () => {
@@ -110,6 +110,8 @@ export const Estudiante = () => {
         { key: 'column4', name: 'Sexo', fieldName: 'sexo', minWidth: 100, maxWidth: 100, isResizable: true },
         { key: 'column5', name: 'CursoId', fieldName: 'cursoId', minWidth: 100, maxWidth: 100, isResizable: true },
         { key: 'column6', name: 'Nombre del curso', fieldName: 'nombreCurso', minWidth: 100, maxWidth: 100, isResizable: true },
+        { key: 'column7', name: ' PaisId', fieldName: 'paisId', minWidth: 100, maxWidth: 100, isResizable: true },
+        { key: 'column8', name: 'Nombre del pais', fieldName: 'nombrePais', minWidth: 100, maxWidth: 100, isResizable: true },
     ]
 
     const isDisableButton = estudiante ? false : true;

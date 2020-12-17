@@ -3,8 +3,10 @@ import React from 'react'
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import { Estudiante } from '../../Containers/estudiante';
 import { Curso } from '../../Containers/curso';
+import { Pais } from '../../Containers/pais';
 
 import './container.css'
+
     export const ContainerMain=()=>{
         return(
             <div className="container">
@@ -32,6 +34,12 @@ import './container.css'
                         url:'/cursos',
                         icon:'News',
                         key:'cursosNav',
+                    },
+                    {
+                        name:'Paises',
+                        url:'/paises',
+                        icon:'world',
+                        key:'paisesNav',
                     }]
                     }]}
             />
@@ -39,6 +47,7 @@ import './container.css'
                 <Switch>
                     <Route exact path="/estudiantes" component={Estudiante} />
                     <Route exact path="/cursos" component={Curso} />
+                    <Route exact path="/paises" component={Pais} />
                 </Switch>
             </Router>
             </div>

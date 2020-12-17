@@ -11,7 +11,9 @@ export const EstudianteForm = ({ fetchEstudiantes, estudianteSeleccionado, accci
         nombre: acccion === 'Edit' ? estudianteSeleccionado.nombre : '',
         sexo: acccion === 'Edit' ? estudianteSeleccionado.sexo : '',
         edad: acccion === 'Edit' ? estudianteSeleccionado.edad : 0,
-        cursoId: acccion === 'Edit' ? estudianteSeleccionado.cursoId : 0
+        cursoId: acccion === 'Edit' ? estudianteSeleccionado.cursoId : 0,
+        paisId: acccion === 'Edit' ? estudianteSeleccionado.paisId : 0
+
     });
 
     const [mensajeValidacion, setMensajeValidacion] = useState('');
@@ -19,7 +21,8 @@ export const EstudianteForm = ({ fetchEstudiantes, estudianteSeleccionado, accci
         nombre: '',
         sexo: '',
         edad: '',
-        cursoId: ''
+        cursoId: '',
+        paisId:''
     });
 
     const [cursos, setCursos] = useState([]);
@@ -39,7 +42,22 @@ export const EstudianteForm = ({ fetchEstudiantes, estudianteSeleccionado, accci
 
         fetchCursos();
     }, []);
+    
+    const [paises, setPaises] = useState([]);
+     useEffect(() => {
+        const fetchPaises = async () => {
+            const response = await restClient.httpGet('/pais');
 
+            if (response && response.length) {
+                setPaises(response.map(pais => ({
+                    key: pais.id,
+                    text: pais.nombre
+                })))
+            }
+        }
+
+        fetchPaises();
+    }, []);
     const handleTextFieldChange = prop => (event, value) => {
         setEstudiante({ ...estudiante, [prop]: value })
     }
@@ -47,7 +65,9 @@ export const EstudianteForm = ({ fetchEstudiantes, estudianteSeleccionado, accci
     const handleSelectedCursoChange = (event, option) => {
         setEstudiante({ ...estudiante, cursoId: option.key });
     }
-
+    const handleSelectedPaisChange = (event, option) => {
+        setEstudiante({ ...estudiante, paisId: option.key });
+    }
     const handleSelectedSexoChange = (event, option) => {
         setEstudiante({ ...estudiante, sexo: option.key });
     }
@@ -69,6 +89,9 @@ export const EstudianteForm = ({ fetchEstudiantes, estudianteSeleccionado, accci
 
         if (!estudiante.cursoId) {
             mensaje = { ...mensaje, cursoId: 'Seleccione un curso...' };
+        }
+        if (!estudiante.paisId) {
+            mensaje = { ...mensaje, paisId: 'Seleccione un pais...' };
         }
 
         setErrorCampo(mensaje);
@@ -143,6 +166,12 @@ export const EstudianteForm = ({ fetchEstudiantes, estudianteSeleccionado, accci
                 selectedKey={estudiante.cursoId}
                 onChange={handleSelectedCursoChange}
                 errorMessage={errorCampo.cursoId} />
+
+            <Dropdown label="Seleccione un pais"
+                options={paises}
+                selectedKey={estudiante.paisId}
+                onChange={handleSelectedPaisChange}
+                errorMessage={errorCampo.paisId} />
 
             <Dropdown label="Seleccione un género"
                 options={generos}
