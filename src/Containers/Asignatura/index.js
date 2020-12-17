@@ -1,48 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { CommandBar, DefaultButton, DetailsListLayoutMode, Dialog, DialogFooter, DialogType, IconButton, Panel, PrimaryButton, SearchBox, Selection, SelectionMode, ShimmeredDetailsList } from '@fluentui/react';
-import './estudiante.css'
+import './asignatura.css'
 import { restClient } from '../../Services/restClient';
-import { EstudianteForm } from './estudianteForm';
+import { AsignaturaForm } from './asignaturaForm';
 
-export const Estudiante = () => {
+export const Asignatura = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenAlert, setIsOpenAlert] = useState(true);
-    const [estudiantes, setEstudiantes] = useState(undefined); //data.map(item => ({ ...item, nombreCurso: item.curso.nombre }))
+    const [asignaturas, setAsignaturas] = useState(undefined); //data.map(item => ({ ...item, nombreCurso: item.curso.nombre }))
     const [filtro, setFiltro] = useState([]);
-    const [estudiante, setEstudiante] = useState();
+    const [asignatura, setAsignatura] = useState();
     const [acccion, setAccion] = useState('New');
 
     useEffect(() => {
-        fetchEstudiantes();
+        fetchAsignaturas();
     }, []);
 
-    const fetchEstudiantes = async () => {
-        const response = await restClient.httpGet('/estudiante');
+    const fetchAsignaturas = async () => {
+        const response = await restClient.httpGet('/asignatura');
         debugger
         
         if (!response.length) {
             return;
         }
 
-        setEstudiantes(response.map(item => ({ ...item, nombreCurso: item.curso.nombre,nombrePais: item.pais.nombre })));
+        setAsignaturas(response.map(item => ({ ...item, nombreCurso: item.curso.nombre })));
     }
 
     const handleRefreshClick = () => {
-        setEstudiantes(undefined);
+        setAsignaturas(undefined);
 
-        fetchEstudiantes();
+        fetchAsignaturas();
     }
 
     const handleDismissClick = () => {
         setIsOpen(!isOpen);
     }
 
-    const handleNuevoEstudianteClick = () => {
+    const handleNuevoAsignaturaClick = () => {
         setAccion('New');
         setIsOpen(true);
     }
 
-    const handleRemoveEstudianteClick = () => {
+    const handleRemoveAsignaturaClick = () => {
         setIsOpenAlert(false);
     }
 
@@ -50,22 +50,22 @@ export const Estudiante = () => {
         onSelectionChanged: () => {
             const itemSeleccionado = seleccion.getSelection();
 
-            setEstudiante(itemSeleccionado.length ? itemSeleccionado[0] : null);
+            setAsignatura(itemSeleccionado.length ? itemSeleccionado[0] : null);
 
         },
     });
 
-    const handleSearchEstudiante = value => {
+    const handleSearchAsignatura = value => {
 
         if(!value){
-            setEstudiantes(undefined);
+            setAsignaturas(undefined);
             setFiltro([]);
-            fetchEstudiantes();
+            fetchAsignaturas();
 
             return;
         }
 
-        const dataFilter = estudiantes && estudiantes.filter(item => item.nombre.toUpperCase().includes(value.toUpperCase()));
+        const dataFilter = asignaturas && asignaturas.filter(item => item.nombre.toUpperCase().includes(value.toUpperCase()));
 
         setFiltro(dataFilter);
     }
@@ -74,102 +74,98 @@ export const Estudiante = () => {
         setIsOpenAlert(true);
     }
 
-    const handleEditEstudianteClick = () => {
-        if (!estudiante) return 'Selecione un estudiante';
+    const handleEditAsignaturaClick = () => {
+        if (!asignatura) return 'Selecione una asignatura';
 
         setAccion('Edit');
         setIsOpen(true);
     }
 
-    const handleRemoverEstudianteClick = async () => {
-        if (!estudiante) return;
+    const handleRemoverAsignaturaClick = async () => {
+        if (!asignatura) return;
 
-        const response = await restClient.httpDelete('/estudiante', estudiante.id);
+        const response = await restClient.httpDelete('/asignatura', asignatura.id);
 
         if (response === 'success') {
             handleDismissAlertClick();
-            setEstudiantes(undefined);
-            fetchEstudiantes();
+            setAsignaturas(undefined);
+            fetchAsignaturas();
         }
     }
 
-    const handleNoRemoverEstudianteClick = () => {
+    const handleNoRemoverAsignaturaClick = () => {
 
         handleDismissAlertClick();
     }
 
-    const onRenderEdit = (row) => <IconButton iconProps={{ iconName: 'Edit' }} onClick={handleEditEstudianteClick} />
-    const onRenderDelete = (row) => <IconButton iconProps={{ iconName: 'Delete' }} onClick={handleRemoveEstudianteClick} />
+    const onRenderEdit = (row) => <IconButton iconProps={{ iconName: 'Edit' }} onClick={handleEditAsignaturaClick} />
+    const onRenderDelete = (row) => <IconButton iconProps={{ iconName: 'Delete' }} onClick={handleRemoveAsignaturaClick} />
 
     const columns = [
         { key: 'onRenderEdit', name: '', fieldName: '', minWidth: 30, maxWidth: 30, isResizable: true, onRender: onRenderEdit },
         { key: 'onRenderDelete', name: '', fieldName: '', minWidth: 30, maxWidth: 30, isResizable: true, onRender: onRenderDelete },
         { key: 'column1', name: 'Id', fieldName: 'id', minWidth: 100, maxWidth: 100, isResizable: true },
-        { key: 'column2', name: 'Estudiante', fieldName: 'nombre', minWidth: 100, maxWidth: 100, isResizable: true },
-        { key: 'column3', name: 'Edad', fieldName: 'edad', minWidth: 100, maxWidth: 100, isResizable: true },
-        { key: 'column4', name: 'Sexo', fieldName: 'sexo', minWidth: 100, maxWidth: 100, isResizable: true },
+        { key: 'column2', name: 'Asignatura', fieldName: 'nombre', minWidth: 100, maxWidth: 100, isResizable: true },
         { key: 'column5', name: 'CursoId', fieldName: 'cursoId', minWidth: 100, maxWidth: 100, isResizable: true },
-        { key: 'column6', name: 'Nombre del curso', fieldName: 'nombreCurso', minWidth: 100, maxWidth: 200, isResizable: true },
-        { key: 'column7', name: ' PaisId', fieldName: 'paisId', minWidth: 100, maxWidth: 100, isResizable: true },
-        { key: 'column8', name: 'Nombre del pais', fieldName: 'nombrePais', minWidth: 100, maxWidth: 100, isResizable: true },
+        { key: 'column6', name: 'Nombre del curso', fieldName: 'nombreCurso', minWidth: 100, maxWidth: 100, isResizable: true },
     ]
 
-    const isDisableButton = estudiante ? false : true;
+    const isDisableButton = asignatura ? false : true;
 
     return (
-        <div className="estudiante">
+        <div className="asignatura">
             
             <CommandBar // Esta es la barra de comandos en donde están los botones para agregar, editar, etc.
                 items={[{
                     key: 'refresh',
-                    text: 'Refresh',
+                    text: 'Actualizar',
                     iconProps: { iconName: 'Refresh' },
                     onClick: handleRefreshClick,
                 }, {
-                    key: 'newStudent',
-                    text: 'New',
+                    key: 'newAsignatura',
+                    text: 'Nuevo',
                     iconProps: { iconName: 'Add' },
-                    onClick: handleNuevoEstudianteClick,
+                    onClick: handleNuevoAsignaturaClick,
                 },
                 {
-                    key: 'removeStudent',
-                    text: 'Remove',
+                    key: 'removeAsignatura',
+                    text: 'Eliminar',
                     iconProps: { iconName: 'Delete' },
-                    onClick: handleRemoveEstudianteClick,
+                    onClick: handleRemoveAsignaturaClick,
                     disabled: isDisableButton
                 }, {
-                    key: 'editarEstudiante',
-                    text: 'Editar Estudiante',
+                    key: 'editarAsignatura',
+                    text: 'Editar Asignatura',
                     iconProps: { iconName: 'Edit' },
-                    onClick: handleEditEstudianteClick,
+                    onClick: handleEditAsignaturaClick,
                     disabled: isDisableButton
                 }]}
             />
 
             <SearchBox // Control de búsqueda
-            styles={{ root: { width: '300px' } }} placeholder="Buscar..." onSearch={handleSearchEstudiante} />
+            styles={{ root: { width: '300px' } }} placeholder="Buscar..." onSearch={handleSearchAsignatura} />
 
             <div className="contenedorLista">
                 <ShimmeredDetailsList
-                    items={filtro.length ? filtro : estudiantes}
+                    items={filtro.length ? filtro : asignaturas}
                     columns={columns}
                     layoutMode={DetailsListLayoutMode.justified}
                     selection={seleccion}
                     selectionPreservedOnEmptyClick={true}
                     selectionMode={SelectionMode.single}
-                    enableShimmer={!estudiantes}
+                    enableShimmer={!asignaturas}
                 />
             </div>
 
             <Panel // Este es el panel que sale del lado derecho para agregar o editar información
-                headerText={acccion === 'New' ? "Nuevo Estudiante" : "Editar Estudiante"} // Aquí se valida si el título de header es para hacer uno nuevo o para editar, esto debido a que se esta reutilizando el mismo panel
+                headerText={acccion === 'New' ? "Nuevo Asignatura" : "Editar Asignatura"} // Aquí se valida si el título de header es para hacer uno nuevo o para editar, esto debido a que se esta reutilizando el mismo panel
                 isOpen={isOpen}
                 onDismiss={handleDismissClick}
                 customWidth="700px"
             >
-                <EstudianteForm // Este es el formulario que contiene los controles con la información
-                    fetchEstudiantes={fetchEstudiantes} // Hace un GET a la API
-                    estudianteSeleccionado={estudiante || {}}
+                <AsignaturaForm // Este es el formulario que contiene los controles con la información
+                    fetchAsignaturas={fetchAsignaturas} // Hace un GET a la API
+                    asignaturaSeleccionado={asignatura || {}}
                     acccion={acccion}
                     onDismiss={handleDismissClick}
                 />
@@ -180,9 +176,9 @@ export const Estudiante = () => {
                 onDismiss={handleDismissAlertClick} 
                 dialogContentProps={{
                     type: DialogType.normal,
-                    title: 'Remove Student',
+                    title: 'Eliminar asignatura',
                     closeButtonAriaLabel: 'Close',
-                    subText: 'Remover Estudiante?',
+                    subText: 'Remover Asignatura?',
                 }}
                 modalProps={{
                     titleAriaId: '',
@@ -195,8 +191,8 @@ export const Estudiante = () => {
                 <DialogFooter 
                 // Esto muestra los dos botones en la parte inferior, conultando se desea o no eliminar el registro
                 > 
-                    <PrimaryButton onClick={handleRemoverEstudianteClick} text="Si" />
-                    <DefaultButton onClick={handleNoRemoverEstudianteClick} text="No" />
+                    <PrimaryButton onClick={handleRemoverAsignaturaClick} text="Si" />
+                    <DefaultButton onClick={handleNoRemoverAsignaturaClick} text="No" />
                 </DialogFooter>
             </Dialog>
         </div>
