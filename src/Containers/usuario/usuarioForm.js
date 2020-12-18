@@ -5,7 +5,7 @@ import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import { Dropdown, PrimaryButton, ProgressIndicator, TextField } from '@fluentui/react';
 import { restClient } from '../../Services/restClient';
 
-
+const estado = [{ key: 'true', text: 'True' }, { key: 'false', text: 'False' }];
 export const UsuarioForm = ({ fetchUsuarios, usuarioSeleccionado, acccion, onDismiss }) => {
     const [usuario, setUsuario] = useState({
         UsuarioId: acccion === 'Edit' ? usuarioSeleccionado.UsuarioId : '',
@@ -44,6 +44,11 @@ export const UsuarioForm = ({ fetchUsuarios, usuarioSeleccionado, acccion, onDis
         setUsuario({ ...usuario, [prop]: value })
     }
     
+    const handleSelectedIsActiveChange = (event, option) => {
+        setUsuario({ ...usuario, isActive: option.key });
+    }
+    
+
 
     const validandoCampos = () => {
         let mensaje = {};
@@ -107,7 +112,8 @@ export const UsuarioForm = ({ fetchUsuarios, usuarioSeleccionado, acccion, onDis
         setShowSpinner(false);
         onDismiss();
     }
-
+    const stackTokens = { childrenGap: 10 };
+    
     return (
         <div>
 
@@ -117,13 +123,18 @@ export const UsuarioForm = ({ fetchUsuarios, usuarioSeleccionado, acccion, onDis
                 value={usuario.UsuarioId}
                 onChange={handleTextFieldChange('UsuarioId')}
                 errorMessage={errorCampo.UsuarioId} />
-            <TextField label="Contrasenia"
+            <TextField label="Contraseña"
                 value={usuario.PasswordUsuario}
                 onChange={handleTextFieldChange('PasswordUsuario')}
                 errorMessage={errorCampo.PasswordUsuario} />
-            <br />
-        
+              <Dropdown label="Estado"
+                options={estado}
+                selectedKey={usuario.isActive}
+                onChange={handleSelectedIsActiveChange}
+                errorMessage={errorCampo.sexo} />
 
+               
+            <br />
             <PrimaryButton text="Guardar" onClick={acccion === 'New' ? handleGuardarClick : handleEditarClick} />
 
             <br />
