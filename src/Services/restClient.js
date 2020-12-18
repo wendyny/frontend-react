@@ -1,13 +1,17 @@
-// Aquí debe colocar la URL de sus servicios, recurde solo colocar la base, es decir, hasta api
-const urlBase = 'https://localhost:44394/api' 
+
+const urlBase = 'https://localhost:44394/api'
+
 export class restClient {
     static httpGet = (url) => {
 
-const urlcompleta=`${urlBase}${url}`;
-        return fetch(urlcompleta)
-            .then(response => response.json())
+        return fetch(`${urlBase}${url}`)
             .then(response => {
-                
+                if (response.status === 400) {
+                    return response.text();
+                }
+                return response.json()
+            })
+            .then(response => {
                 return response;
             });
     }
@@ -64,4 +68,6 @@ const urlcompleta=`${urlBase}${url}`;
         });
     }
 }
+
+
 

@@ -104,12 +104,12 @@ export const Estudiante = () => {
     const columns = [
         { key: 'onRenderEdit', name: '', fieldName: '', minWidth: 30, maxWidth: 30, isResizable: true, onRender: onRenderEdit },
         { key: 'onRenderDelete', name: '', fieldName: '', minWidth: 30, maxWidth: 30, isResizable: true, onRender: onRenderDelete },
-        { key: 'column1', name: 'Id', fieldName: 'id', minWidth: 100, maxWidth: 100, isResizable: true },
+        { key: 'column1', name: 'Id', fieldName: 'id', minWidth: 100, maxWidth: 50, isResizable: true },
         { key: 'column2', name: 'Estudiante', fieldName: 'nombre', minWidth: 100, maxWidth: 100, isResizable: true },
-        { key: 'column3', name: 'Edad', fieldName: 'edad', minWidth: 100, maxWidth: 100, isResizable: true },
-        { key: 'column4', name: 'Sexo', fieldName: 'sexo', minWidth: 100, maxWidth: 100, isResizable: true },
+        { key: 'column3', name: 'Edad', fieldName: 'edad', minWidth: 100, maxWidth: 70, isResizable: true },
+        { key: 'column4', name: 'Sexo', fieldName: 'sexo', minWidth: 70, maxWidth: 70, isResizable: true },
         { key: 'column5', name: 'CursoId', fieldName: 'cursoId', minWidth: 100, maxWidth: 100, isResizable: true },
-        { key: 'column6', name: 'Nombre del curso', fieldName: 'nombreCurso', minWidth: 100, maxWidth: 200, isResizable: true },
+        { key: 'column6', name: 'Nombre del curso', fieldName: 'nombreCurso', minWidth: 100, maxWidth: 150, isResizable: true },
         { key: 'column7', name: ' PaisId', fieldName: 'paisId', minWidth: 100, maxWidth: 100, isResizable: true },
         { key: 'column8', name: 'Nombre del pais', fieldName: 'nombrePais', minWidth: 100, maxWidth: 100, isResizable: true },
     ]

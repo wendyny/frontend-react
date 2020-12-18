@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {initializeIcons} from '@uifabric/icons';
 initializeIcons();
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

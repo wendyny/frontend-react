@@ -6,64 +6,79 @@ import { Curso } from '../../Containers/curso';
 import { Pais } from '../../Containers/pais';
 import { Asignatura } from '../../Containers/asignatura';
 import { Docente } from '../../Containers/docente';
-
+import { Usuario } from '../../Containers/usuario';
 import './container.css'
+import { Header } from '../Header';
 
     export const ContainerMain=()=>{
+        const handleNavClick = () => {
+
+        }
+    
         return(
             <div className="container">
-                <Nav
-                    selectedKey="key3"
-                    ariaLabel="Nav basic example"
-                    styles={{
-                        root:{
-                            width:210,
-                            height: '100%',
-                            boxSizing: 'border-box',
-                            border: '1px solid #eee',
-                            overflowY:'auto',
-                        },
-                    }}
+               <Header/>
+            <Nav
+                onLinkClick={handleNavClick}
+                selectedKey="key3"
+                ariaLabel="Nav basic example"
+                styles={{
+                    root: {
+                        width: 210,
+                        height: '100%',
+                        boxSizing: 'border-box',
+                        border: '1px solid #eee',
+                        overflowY: 'auto',
+                    },
+                }}
                     groups={[{
                         links:[{
                             name: 'Estudiantes',
-                            url: '/estudiantes',
+                            url: '/containers/estudiantes',
                             icon: 'UserFollowed',
                             key: 'estudiantesNav',
                         },
                     {
                         name:'Cursos',
-                        url:'/cursos',
+                        url:'/containers/cursos',
                         icon:'News',
                         key:'cursosNav',
                     },
                     {
                         name:'Paises',
-                        url:'/paises',
+                        url:'/containers/paises',
                         icon:'world',
                         key:'paisesNav',
                     },
                     {
                         name:'Asignaturas',
-                        url:'/asignaturas',
+                        url:'/containers/asignaturas',
                         icon:'Dictionary',
                         key:'asignaturasNav',
                     },
                     {
                             name:'Docentes',
-                            url:'/docentes',
+                            url:'/containers/docentes',
                             icon:'ManagerSelfService',
                             key:'docentesNav',
-                    }]
+                    },
+                    {
+                        name:'Usuarios',
+                        url:'/containers/usuarios',
+                        icon:'FabricUserFolder',
+                        key:'usuariosNav',
+                    },]
                     }]}
             />
             <Router>
                 <Switch>
-                    <Route exact path="/estudiantes" component={Estudiante} />
-                    <Route exact path="/cursos" component={Curso} />
-                    <Route exact path="/paises" component={Pais} />
-                    <Route exact path="/asignaturas" component={Asignatura} />
-                    <Route exact path="/docentes" component={Docente} />
+                    <Route path="/containers/estudiantes" component={Estudiante} />
+                    <Route path="/containers/cursos" component={Curso} />
+                    <Route path="/containers/paises" component={Pais} />
+                    <Route path="/containers/asignaturas" component={Asignatura} />
+                    <Route path="/containers/docentes" component={Docente} />
+                    <Route path="/containers/usuarios" component={Usuario} />
+
                 </Switch>
             </Router>
             </div>

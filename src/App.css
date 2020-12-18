@@ -10,22 +10,24 @@
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
+    height: 40vmin;
+    pointer-events: none;
   }
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--secondary-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--primary-color);
 }
 
 .App-link {
-  color: #61dafb;
+  color: #101111;
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +37,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+html {
+  --primary-color: #282c34;
+  --secondary-color: #fff;
+}
+
+/* Variables de color si el tema es dark */
+html[data-theme="dark"] {
+  --primary-color: #fff;
+  --secondary-color: #282c34;
 }
